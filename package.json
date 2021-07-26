@@ -1,0 +1,24 @@
+{
+  "name": "fallout-terminal-hacking",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "terminal": "node index.js",
+    "test": "jest --verbose ./ --watchAll",
+    "test-coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/domatibor/fallout-terminal-hacking.git"
+  },
+  "author": "Tibor Doma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/domatibor/fallout-terminal-hacking/issues"
+  },
+  "homepage": "https://github.com/domatibor/fallout-terminal-hacking#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}

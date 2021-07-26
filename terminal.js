@@ -118,7 +118,7 @@ Terminal.prototype.onSubmit = function () {
 Terminal.prototype.hammingDistance = function (a, b) {
 
     if (typeof a !== 'string' || typeof b !== 'string') {
-        throw Error('The Hamming distance can only be calculated between two strings.');
+        throw new Error('The Hamming distance can only be calculated between two strings.');
     }
 
     if (a.length !== b.length) {

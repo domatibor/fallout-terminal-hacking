@@ -1,5 +1,6 @@
 const ProcessArgvParser = require('./process-argv-parser');
 const Terminal = require('./terminal');
+const WORDS = require('./words');
 
 const KEYS = {
     NewLine: '\u000d',
@@ -7,18 +8,7 @@ const KEYS = {
 };
 const STD_IN = process.stdin;
 const STD_OUT = process.stdout;
-const WORDS = [
-    'drown',
-    'whole',
-    'check',
-    'upset',
-    'flash',
-    'prize',
-    'charm',
-    'match',
-    'guess',
-    'climb'
-];
+
 
 const processArgvParser = new ProcessArgvParser('Fallout Terminal Hacking', 'Fallout 4 inspired terminal hacking game.');
 processArgvParser
