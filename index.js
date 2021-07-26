@@ -1,3 +1,6 @@
+const ProcessArgvParser = require('./process-argv-parser');
+const Terminal = require('./terminal');
+
 const KEYS = {
     NewLine: '\u000d',
     EndOfText: '\u0003'
@@ -17,8 +20,15 @@ const WORDS = [
     'climb'
 ];
 
-const Terminal = require('./terminal');
-const TERMINAL = new Terminal(WORDS);
+const processArgvParser = new ProcessArgvParser('Fallout Terminal Hacking', 'Fallout 4 inspired terminal hacking game.');
+processArgvParser
+    .registerCommand('size', 's', 'How many special characters should be in the text.', 'number')
+    .registerCommand('level', 'l', '', 'string')
+    .registerCommand('method', 'm', '', 'string')
+    .registerCommand('attempts', 'a', 'Specify the number of times the user can try to crack the password.', 'number')
+    .init();
+
+const terminal = new Terminal(WORDS, processArgvParser.findCommandByNameOrAlias('size').value || 1000);
 
 // Configure stdin
 STD_IN.setRawMode(true);
@@ -26,7 +36,7 @@ STD_IN.resume();
 STD_IN.setEncoding('utf-8');
 
 // Init the terminal
-STD_OUT.write(TERMINAL.prompt);
+STD_OUT.write(terminal.prompt);
 
 STD_IN.on('data', function (key) {
 
@@ -36,20 +46,20 @@ STD_IN.on('data', function (key) {
 
     if (key === KEYS.NewLine) {
 
-        const result = TERMINAL.onSubmit();
+        const result = terminal.onSubmit();
         STD_OUT.write(result.printOut);
 
         if (result.endProcess) {
             process.exit();
         }
 
-        TERMINAL.resetInput();
+        terminal.resetInput();
 
         return;
 
     }
 
-    TERMINAL.input = key;
+    terminal.input = key;
 
     // write the key to stdout all normal like
     STD_OUT.write(key);

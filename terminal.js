@@ -247,7 +247,7 @@ Terminal.prototype.convertStringToUnicode = function (s) {
 
 /**
  * @param items {string|string[]}
- * @return items {string}
+ * @return {string}
  */
 Terminal.prototype.getRandomItem = function (items) {
     const randomIndex = Math.floor(Math.random() * items.length);
