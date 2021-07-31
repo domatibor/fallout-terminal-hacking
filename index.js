@@ -26,7 +26,7 @@ STD_IN.resume();
 STD_IN.setEncoding('utf-8');
 
 // Init the terminal
-STD_OUT.write(terminal.prompt);
+console.log(terminal.prompt);
 
 STD_IN.on('data', function (key) {
 
@@ -37,7 +37,7 @@ STD_IN.on('data', function (key) {
     if (key === KEYS.NewLine) {
 
         const result = terminal.onSubmit();
-        STD_OUT.write(result.printOut);
+        console.log(...result.printOut);
 
         if (result.endProcess) {
             process.exit();

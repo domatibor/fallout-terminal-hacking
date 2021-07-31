@@ -32,7 +32,13 @@ Object.defineProperty(Terminal.prototype, 'prompt', {
             passwordLeakString += this.getRandomItem(specialCharacters);
         }
 
-        return `\nWelcome to ROBCO Industries (TM) Termlink\nPassword Required\n-----------------\n${passwordLeakString}\n\n`;
+        return [
+            '\n\x1b[34mWelcome to ROBCO Industries (TM) Termlink\x1b[0m',
+            '\nPassword Required',
+            '\n-----------------' +
+            '\x1b[33m', `\n${passwordLeakString}`, '\x1b[0m',
+            '\n']
+            .join('');
     }
 });
 
@@ -65,7 +71,8 @@ Object.defineProperty(Terminal.prototype, 'levenshteinDistanceValue', {
             return `Levenshtein distance is [${ld}]`;
 
         } catch (e) {
-            return 'Levenshtein distance cannot be calculated.';
+            // this.input getter give back a string in every case, so this branch will never run
+            // return 'Levenshtein distance cannot be calculated.';
         }
     }
 });
@@ -95,13 +102,18 @@ Terminal.prototype.onSubmit = function () {
 
     if (this.input === this.password) {
         return {
-            printOut: '\n>> Congratulation. You broke the password!',
+            printOut: [
+                '\x1b[32m%s\x1b[0m',
+                '\n>> Congratulation. You broke the password!'],
             endProcess: true
         };
     }
 
     return {
-        printOut: `\n>> Incorrect password.\n${this.levenshteinDistanceValue}\n${this.hammingDistanceValue}\n\n`,
+        printOut: [
+            '\x1b[31m%s\x1b[0m',
+            '\n>> Incorrect password.',
+            `\n${this.levenshteinDistanceValue}\n${this.hammingDistanceValue}\n`],
         endProcess: false
     };
 

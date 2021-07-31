@@ -82,9 +82,40 @@ describe('Terminal class unit tests', function () {
         expect(extractedWords).toEqual(WORDS);
     });
 
+    test.each(WORDS)('The word %j, is appears in prompt', function (fixture) {
+        const terminal = new Terminal(WORDS);
+        expect(terminal.prompt).toMatch(fixture.toUpperCase());
+    })
+
     test('Should give back the input string in upper case', function () {
        const terminal = new Terminal(WORDS);
        terminal.input = 'foo';
        expect(terminal.input).toEqual('FOO');
+    });
+
+    test('Should reset the input string', function () {
+        const terminal = new Terminal(WORDS);
+        terminal.input = 'foo';
+        expect(terminal.input).toEqual('FOO');
+        terminal.resetInput();
+        expect(terminal.input).toEqual('');
+    });
+
+    test('Should return "Levenshtein distance is [0]"', function () {
+       const terminal = new Terminal(WORDS);
+       terminal.input = terminal.password;
+       expect(terminal.levenshteinDistanceValue).toEqual('Levenshtein distance is [0]');
+    });
+
+    test('Should return "Hamming distance is [0]"', function () {
+        const terminal = new Terminal(WORDS);
+        terminal.input = terminal.password;
+        expect(terminal.hammingDistanceValue).toEqual('Hamming distance is [0]');
+    });
+
+    test('Should return "Hamming distance cannot be calculated."', function () {
+        const terminal = new Terminal(WORDS);
+        terminal.input = '';
+        expect(terminal.hammingDistanceValue).toEqual('Hamming distance cannot be calculated.');
     });
 });
